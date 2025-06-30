@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exeptoins.DuplicatedDataException;
 import ru.practicum.shareit.exeptoins.NotFoundException;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.dal.UserStorage;
 import ru.practicum.shareit.user.dto.NewUserRequest;
 import ru.practicum.shareit.user.dto.UpdateUserRequest;
@@ -52,9 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto deleteUser(long userId) {
-        final User deletedUser = userStorage.remove(userId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с id - " + userId + " не найден."));
-        return UserMapper.mapToUserDto(deletedUser);
+    public void deleteUser(long userId) {
+        userStorage.remove(userId).orElseThrow(() -> new NotFoundException("Пользователь с id - " + userId + " не найден."));
     }
 }
