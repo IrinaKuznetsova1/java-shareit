@@ -17,7 +17,7 @@ public class InMemoryItemStorage implements ItemStorage {
     public List<Item> getAllByOwnerId(long ownerId) {
         return items.values()
                 .stream()
-                .filter(item -> item.getOwner() == ownerId)
+                .filter(item -> item.getOwner().getId() == ownerId)
                 .toList();
     }
 
