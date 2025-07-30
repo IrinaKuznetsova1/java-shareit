@@ -1,6 +1,7 @@
 package ru.practicum.shareit.item.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.dal.BookingRepository;
 import ru.practicum.shareit.booking.model.Booking;
@@ -33,7 +34,7 @@ public class ItemServiceImpl implements ItemService {
                 .stream()
                 .map(ItemMapper::mapToItemWithDatesDto)
                 .toList();
-        final List<Booking> bookings = bookingRepository.findByItemOwnerIdOrderByStartDesc(ownerId);
+        final List<Booking> bookings = bookingRepository.findByItemOwnerId(ownerId, Sort.by(Sort.Direction.DESC, "start"));
 
         for (ItemWithDatesDto itemWithDatesDto : items) {
             itemWithDatesDto.setComments(
@@ -104,7 +105,7 @@ public class ItemServiceImpl implements ItemService {
         final Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Вещь с id - " + itemId + " не найдена."));
         List<Booking> booking = bookingRepository
-                .findByBookerIdAndEndBeforeOrderByStartDesc(userId, LocalDateTime.now());
+                .findByBookerIdAndEndBefore(userId, LocalDateTime.now(), Sort.by(Sort.Direction.DESC, "start"));
         if (booking.isEmpty())
             throw new NotAvailableException("userId", "Пользователь с id - " + userId + " не брал в аренду вещь с id - " + itemId);
         final Comment comment = CommentMapper.mapToComment(newComment, user, item);
