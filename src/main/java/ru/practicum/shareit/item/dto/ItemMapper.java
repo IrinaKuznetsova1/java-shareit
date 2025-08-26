@@ -10,6 +10,15 @@ public class ItemMapper {
         return new ItemDto(item.getId(), item.getName(), item.getDescription(), item.isAvailable());
     }
 
+    public static ItemWithDatesDto mapToItemWithDatesDto(Item item) {
+        ItemWithDatesDto itemWithDatesDto = new ItemWithDatesDto();
+        itemWithDatesDto.setId(item.getId());
+        itemWithDatesDto.setName(item.getName());
+        itemWithDatesDto.setDescription(item.getDescription());
+        itemWithDatesDto.setAvailable(item.isAvailable());
+        return itemWithDatesDto;
+    }
+
     public static Item mapToItem(NewItemRequest request) {
         Item item = new Item();
         item.setName(request.getName());
@@ -27,4 +36,5 @@ public class ItemMapper {
             item.setAvailable(request.getAvailable());
         return item;
     }
+
 }
