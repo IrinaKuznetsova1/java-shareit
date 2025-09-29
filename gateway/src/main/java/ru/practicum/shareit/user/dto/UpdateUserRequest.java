@@ -12,12 +12,4 @@ public class UpdateUserRequest {
     @Email(message = "строка должна соответствовать формату адреса электронной почты")
     @Size(max = 256, message = "максимальная длина email - 256 символов")
     private String email;
-
-    public boolean hasName() {
-        return !(name == null || name.isBlank());
-    }
-
-    public boolean hasEmail() {
-        return !(email == null || email.isBlank());
-    }
 }
